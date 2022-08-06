@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import withName from '../withName'
 import global  from '../../constants/global.constants'
@@ -21,11 +21,43 @@ function PostList(props:any) {
   const posts: Post[] = useFetch('https://jsonplaceholder.typicode.com/posts/').data!
   const users: User[] = useFetch('https://jsonplaceholder.typicode.com/users/').data!
 
-  return (
+  const [authorName, setAuthorName] = useState('')
+  const [filterTerm, setFilterTerm] = useState('')
+
+  function handleChange(e: React.FormEvent<HTMLInputElement>){
+    setAuthorName(e.currentTarget.value)
+  }
+
+  function handleClick(e: React.MouseEvent<HTMLElement>){
+    e.preventDefault()
+    setFilterTerm(authorName)
+  }
+
+  return (    
     <>
       <h1>Post List</h1>
+      <form>
+        <label>Filter by Author Name
+          <input type="text" value={authorName} onChange={handleChange} />  
+        </label>
+        <button onClick={handleClick}>Filter</button>      
+      </form>
       <ul>
-        {posts && posts.map((post) => {
+      {(posts && users) &&
+        posts
+        .filter(post => {
+          const user: User = users.find(user => user.name == filterTerm)!
+          
+          if(user){
+            return post.userId == user.id
+          }else if(filterTerm == ''){
+            return post
+          }else{
+            return null
+          }
+          
+        })
+        .map((post) => {
           const user: User = users.find(user => user.id == post.userId)!
 
           return (
@@ -34,7 +66,8 @@ function PostList(props:any) {
               <h3>By {user.name}</h3>
             </li>
             )
-        })}
+        })
+        }
       </ul>
     </>
   )

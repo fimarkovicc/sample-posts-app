@@ -1,5 +1,5 @@
 import React from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, Link } from 'react-router-dom'
 import withName from '../withName'
 import useFetch from '../../hooks/useFetch'
 import global  from '../../constants/global.constants'
@@ -29,23 +29,25 @@ function renderComments(comments: Comment[]){
 }
 
 function Post(props: any) {
-    console.log(global.componentGreetingMessage + props.name)
-    
+    console.log(global.componentGreetingMessage + props.name)    
     const { id } = useParams()
+    
     const post: Post = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}`).data!
     const comments: Comment[] = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`).data!
-    console.log(comments)
-  return (
-        post && 
-          <div>
-            <h1>{post.title}</h1>
-            <h3>By {post.userId}</h3>
-            <p>{post.body}</p>
-            <div>
-              <h4>Comments</h4>
-              {renderComments(comments)}
-            </div>
-          </div>
+
+  return ( 
+    (post && comments) &&
+    <>
+      <div>
+        <Link to="/posts/">Back</Link>
+        <h1>{post.title}</h1>
+        <p>{post.body}</p>
+        <div>
+          <h4>Comments</h4>
+          {renderComments(comments)}
+        </div>
+      </div>
+    </>
   )
 }
 
