@@ -1,25 +1,16 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
-import withName from '../withName'
+import withName, { WithNameType } from '../withName'
 import global  from '../../constants/global.constants'
 import useFetch from '../../hooks/useFetch'
+import { PostType, UserType } from './PostList.types'
+import styles from './PostList.module.css'
 
-type Post = {
-  title: string
-  id: number
-  userId: number
-}
-
-type User = {
-  name: string
-  id: number
-}
-
-function PostList(props:any) {
+function PostList(props: WithNameType) {
   console.log(global.componentGreetingMessage + props.name)
 
-  const posts: Post[] = useFetch('https://jsonplaceholder.typicode.com/posts/').data!
-  const users: User[] = useFetch('https://jsonplaceholder.typicode.com/users/').data!
+  const posts: PostType[] = useFetch('https://jsonplaceholder.typicode.com/posts/').data!
+  const users: UserType[] = useFetch('https://jsonplaceholder.typicode.com/users/').data!
 
   const [authorName, setAuthorName] = useState('')
   const [filterTerm, setFilterTerm] = useState('')
@@ -42,11 +33,11 @@ function PostList(props:any) {
         </label>
         <button onClick={handleClick}>Filter</button>      
       </form>
-      <ul>
+      <ul className={styles.post_list}>
       {(posts && users) &&
         posts
         .filter(post => {
-          const user: User = users.find(user => user.name == filterTerm)!
+          const user: UserType = users.find(user => user.name == filterTerm)!
           
           if(user){
             return post.userId == user.id
@@ -58,7 +49,7 @@ function PostList(props:any) {
           
         })
         .map((post) => {
-          const user: User = users.find(user => user.id == post.userId)!
+          const user: UserType = users.find(user => user.id == post.userId)!
 
           return (
             <li key={post.id}>

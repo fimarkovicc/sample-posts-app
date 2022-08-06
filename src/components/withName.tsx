@@ -1,20 +1,15 @@
 import React from 'react'
 
-type WithNameProps = {
+export type WithNameType = {
   name: string
 }
 
-const withName = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
+export default function withName<P>(WrappedComponent: React.ComponentType<P & WithNameType>) {  
   const componentName = WrappedComponent.name || WrappedComponent.displayName || 'noname'
 
-  class WithName extends React.Component<P & WithNameProps> {
-    
-    render() {
-      return <WrappedComponent name={componentName} {...this.props as P} />
-    }
+  const WithNameComponent = (props: P) => {    
+    return <WrappedComponent {...props} name={componentName} />
   }
 
-  return WithName
+  return WithNameComponent
 }
-
-export default withName

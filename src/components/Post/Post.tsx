@@ -1,24 +1,11 @@
 import React from 'react'
 import { useParams, Link } from 'react-router-dom'
-import withName from '../withName'
+import withName, { WithNameType } from '../withName'
 import useFetch from '../../hooks/useFetch'
 import global  from '../../constants/global.constants'
+import { PostType, CommentType } from './Post.types'
 
-type Post = {
-  title: string
-  id: number
-  userId: number
-  body: string
-}
-
-type Comment = {
-  name: string
-  id: number
-  postId: number
-  body: string
-}
-
-function renderComments(comments: Comment[]){
+function renderComments(comments: CommentType[]){
   return comments && comments.map(comment => {
     return (
       <div key={comment.id}>
@@ -28,18 +15,18 @@ function renderComments(comments: Comment[]){
   })
 }
 
-function Post(props: any) {
+function Post(props: WithNameType) {
     console.log(global.componentGreetingMessage + props.name)    
     const { id } = useParams()
     
-    const post: Post = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}`).data!
-    const comments: Comment[] = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`).data!
+    const post: PostType = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}`).data!
+    const comments: CommentType[] = useFetch(`https://jsonplaceholder.typicode.com/posts/${id}/comments`).data!
 
   return ( 
     (post && comments) &&
     <>
       <div>
-        <Link to="/posts/">Back</Link>
+        <Link to="/posts/">Back to Post List</Link>
         <h1>{post.title}</h1>
         <p>{post.body}</p>
         <div>
