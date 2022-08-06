@@ -1,14 +1,19 @@
 import React from 'react'
-import Comment from './components/Comment.tsx/Comment';
-import CommentList from './components/CommentList/CommentList'
-
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import PostList from './components/PostList/PostList'
+import Post from './components/Post/Post'
+import Error404 from './components/Error404/Error404'
 
 function App() {
   return (
-    <>
-      <CommentList />
-      <Comment />
-    </>
+    <Router>
+      <Routes>
+        <Route path="/" element={<PostList />} />
+        <Route path="/posts" element={<PostList />} />    
+        <Route path="/post/:id" element={<Post />} />
+        <Route path="*" element={<Error404 />} />
+      </Routes>
+    </Router>
   )
 }
 
