@@ -1,13 +1,18 @@
 import React from 'react'
+import withName, { WithNameType } from '../withName'
+import global from './../../constants/global.constants'
 import { Link } from 'react-router-dom'
+import styles from './Error404.module.css'
 
-function Error404() {
+function Error404(props: WithNameType) {
+  console.log(global.componentGreetingMessage + props.name)
+
   return (
-    <div>
+    <div className={styles.errorPage}>
         <h1>Error 404 - Not Found</h1>
-        <Link to="/">Back to Comment List</Link>
+        <button><Link to="/">Back to Comment List</Link></button>
     </div>
   )
 }
 
-export default Error404
+export default withName(Error404)

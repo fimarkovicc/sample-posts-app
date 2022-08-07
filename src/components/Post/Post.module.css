@@ -1,0 +1,13 @@
+.postTitle {
+    text-transform: capitalize;
+}
+
+.postBody {
+    line-height: 2;
+}
+
+.postComments {
+    margin-bottom: 42px;
+    background-color: rgb(250, 239, 215);
+    padding: 18px 24px;
+}

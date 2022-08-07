@@ -25,15 +25,15 @@ function PostList(props: WithNameType) {
   }
 
   return (    
-    <>
+    <div>
       <h1>Post List</h1>
-      <form>
+      <form className={styles.filterForm}>
         <label>Filter by Author Name
           <input type="text" value={authorName} onChange={handleChange} />  
         </label>
         <button onClick={handleClick}>Filter</button>      
       </form>
-      <ul className={styles.post_list}>
+      <ul className={styles.postList}>
       {(posts && users) &&
         posts
         .filter(post => {
@@ -48,19 +48,20 @@ function PostList(props: WithNameType) {
           }
           
         })
-        .map((post) => {
+        .map((post, i) => {
           const user: UserType = users.find(user => user.id == post.userId)!
 
           return (
             <li key={post.id}>
-              <h2><Link to={`/post/${post.id}`}>{post.title}</Link></h2>
-              <h3>By {user.name}</h3>
+              <span className={styles.postNumber}>{i+1}</span>
+              <h2 className={styles.postTitle}><Link to={`/post/${post.id}`}>{post.title}</Link></h2>
+              <h3 className={styles.postSubTitle}>By {user.name}</h3>
             </li>
             )
         })
         }
       </ul>
-    </>
+    </div>
   )
 }
 

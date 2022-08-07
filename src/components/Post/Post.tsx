@@ -4,13 +4,14 @@ import withName, { WithNameType } from '../withName'
 import useFetch from '../../hooks/useFetch'
 import global  from '../../constants/global.constants'
 import { PostType, CommentType } from './Post.types'
+import styles from './Post.module.css'
 
 function renderComments(comments: CommentType[]){
   return comments && comments.map(comment => {
     return (
-      <div key={comment.id}>
+      <li key={comment.id}>
         <h4>{comment.name}</h4>
-      </div>
+      </li>
     )
   })
 }
@@ -26,13 +27,13 @@ function Post(props: WithNameType) {
     (post && comments) &&
     <>
       <div>
-        <Link to="/posts/">Back to Post List</Link>
-        <h1>{post.title}</h1>
-        <p>{post.body}</p>
-        <div>
-          <h4>Comments</h4>
-          {renderComments(comments)}
+        <h1 className={styles.postTitle}>{post.title}</h1>
+        <p className={styles.postBody}>{post.body}</p>
+        <div className={styles.postComments}>
+          <h3>Comments</h3>
+          <ul>{renderComments(comments)}</ul>
         </div>
+        <button><Link to="/posts/">Back to Post List</Link></button>
       </div>
     </>
   )
