@@ -28,6 +28,10 @@ h1, .filterForm {
     margin-bottom: 0;
 }
 
+.postTitle a:hover {
+    text-decoration: underline;
+}
+
 .postSubTitle {
     margin-left: 12px;
 }

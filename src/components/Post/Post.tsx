@@ -25,7 +25,6 @@ function Post(props: WithNameType) {
 
   return ( 
     (post && comments) &&
-    <>
       <div>
         <h1 className={styles.postTitle}>{post.title}</h1>
         <p className={styles.postBody}>{post.body}</p>
@@ -35,7 +34,6 @@ function Post(props: WithNameType) {
         </div>
         <button><Link to="/posts/">Back to Post List</Link></button>
       </div>
-    </>
   )
 }
 
